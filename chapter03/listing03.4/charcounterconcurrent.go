@@ -39,6 +39,6 @@ func main() {
 
 	time.Sleep(10 * time.Second)
 	for i, c := range allLetters {
-		fmt.Printf("%c-%d", c, frequency[i])
+		fmt.Printf("%c-%d\n", c, frequency[i])
 	}
 }
