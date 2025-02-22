@@ -34,10 +34,10 @@ func NewSemaphore(n int) *Semaphore {
 
 func (s *Semaphore) Acquire() {
 	s.cond.L.Lock()
-	if s.permits <= 0 {
+	for s.permits <= 0 {
 		s.cond.Wait()
 	}
-
+	s.permits--
 	s.cond.L.Unlock()
 }
 
