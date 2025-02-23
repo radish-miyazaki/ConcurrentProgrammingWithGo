@@ -21,6 +21,7 @@ func main() {
 	}
 }
 
+// 解答例と異なるが、自分の解答の方が問題に近いと思う
 func timeout(cond *sync.Cond, waitingSeconds int, isTimeout *bool) {
 	time.Sleep(time.Duration(waitingSeconds) * time.Second)
 
