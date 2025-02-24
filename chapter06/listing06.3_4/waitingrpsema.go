@@ -1,6 +1,39 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	wg := NewWaitGrp(4)
+	for i := 1; i <= 4; i++ {
+		go doWork(i, wg)
+	}
+	wg.Wait()
+	fmt.Println("All done")
+}
+
+func doWork(id int, wg *WaitGrp) {
+	fmt.Println(id, "Done working")
+	wg.Done()
+}
+
+type WaitGrp struct {
+	sema *Semaphore
+}
+
+func NewWaitGrp(size int) *WaitGrp {
+	return &WaitGrp{sema: NewSemaphore(1 - size)}
+}
+
+func (wg *WaitGrp) Wait() {
+	wg.sema.Acquire()
+}
+
+func (wg *WaitGrp) Done() {
+	wg.sema.Release()
+}
 
 type Semaphore struct {
 	// セマフォに残っている許可数
